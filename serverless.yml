@@ -1,0 +1,28 @@
+service: serverless-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.10
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource: '*'
+
+functions:
+  create_inventory:
+    handler: create.handler
+    events:
+      - httpApi:
+          path: /
+          method: post
+  
+  list_inventory:
+    handler: list.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
